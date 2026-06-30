@@ -1,0 +1,40 @@
+---
+- name: Configuración base Cisco
+  hosts: cisco
+  gather_facts: no
+
+  vars_files:
+    - vars.yml
+
+  tasks:
+
+    - name: Configurar hostname
+      ios_config:
+        lines:
+          - hostname {{ hostname }}
+
+    - name: Configurar dominio
+      ios_config:
+        lines:
+          - ip domain-name {{ domain_name }}
+
+    - name: Configurar NTP
+      ios_config:
+        lines:
+          - ntp server {{ ntp_server }}
+
+    - name: Crear usuario administrador
+      ios_config:
+        lines:
+          - username {{ admin_user }} privilege 15 secret {{ admin_password }}
+
+    - name: Configurar SSH
+      ios_config:
+        lines:
+          - crypto key generate rsa modulus 2048
+          - ip ssh version 2
+
+    - name: Configurar seguridad
+      ios_config:
+        lines:
+          - login block-for 60 attempts 3 within 60
