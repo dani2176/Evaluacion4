@@ -3,9 +3,9 @@ from netmiko import ConnectHandler
 # Datos del router Cisco
 router = {
     "device_type": "cisco_ios",
-    "host": "IP_DEL_ROUTER",
-    "username": "USUARIO",
-    "password": "CONTRASEÑA",
+    "host": "192.168.56.103",
+    "username": "cisco",
+    "password": "cisco123",
 }
 
 def conectar():
