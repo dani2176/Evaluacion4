@@ -1,22 +1,21 @@
+import json
 from conexion import conectar
 
 conexion = conectar()
 
 if conexion:
 
-    print("\n===== HOSTNAME =====")
-    print(conexion.send_command("show running-config | include hostname"))
+    datos = {
+        "hostname": conexion.send_command("show running-config | include hostname"),
+        "interfaces": conexion.send_command("show ip interface brief"),
+        "ssh": conexion.send_command("show ip ssh"),
+        "ntp": conexion.send_command("show ntp status"),
+        "usuarios": conexion.send_command("show running-config | include username")
+    }
 
-    print("\n===== INTERFACES =====")
-    print(conexion.send_command("show ip interface brief"))
+    with open("reporte.json", "w") as archivo:
+        json.dump(datos, archivo, indent=4)
 
-    print("\n===== SSH =====")
-    print(conexion.send_command("show ip ssh"))
-
-    print("\n===== NTP =====")
-    print(conexion.send_command("show ntp status"))
-
-    print("\n===== USUARIOS =====")
-    print(conexion.send_command("show running-config | include username"))
+    print("Reporte generado correctamente.")
 
     conexion.disconnect()
