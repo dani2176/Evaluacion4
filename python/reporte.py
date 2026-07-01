@@ -13,7 +13,7 @@ if conexion:
         "usuarios": conexion.send_command("show running-config | include username")
     }
 
-    with open("reporte.json", "w") as archivo:
+    with open("../reportes/reporte.json", "w") as archivo:
         json.dump(datos, archivo, indent=4)
 
     print("Reporte generado correctamente.")
