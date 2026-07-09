@@ -6,16 +6,9 @@
   tasks:
 
     - name: Configurar interfaz LAN
-      ios_config:
-        parents: interface GigabitEthernet0/0
+      cisco.ios.ios_config:
+        parents: interface GigabitEthernet1
         lines:
           - description LAN
           - ip address 192.168.10.1 255.255.255.0
           - no shutdown
-
-    - name: Configurar VLAN10
-      ios_config:
-        parents: interface GigabitEthernet0/0.10
-        lines:
-          - encapsulation dot1Q 10
-          - ip address 192.168.10.1 255.255.255.0
