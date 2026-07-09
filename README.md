@@ -46,27 +46,34 @@ Automatizar la configuración de dispositivos Cisco IOS para:
 
 Actualmente el proyecto permite:
 
-### Administración de Equipos Cisco
+## Administración de Equipos Cisco
+    Configuración automática de interfaces mediante Ansible.
+    Configuración de dirección IP.
+    Configuración de hostname.
+    Configuración de usuarios.
+    Configuración de SSH.
+    Configuración de NTP.
+    Ejecución remota de comandos IOS.
+    Automatización mediante Playbooks.
 
-- Configuración automática de interfaces.
-- Configuración de direcciones IP.
-- Configuración de VLAN.
-- Configuración de SSH.
-- Ejecución remota de comandos.
-- Automatización mediante Playbooks.
+## Automatización con Python
+    Conexión SSH al router.
+    Generación automática de respaldos (backup.py).
+    Validación de la configuración del router (validar_red.py).
+    Generación de reporte JSON (reporte.py).
 
-### Administración del Servidor
+## Automatización con Bash
+    Ejecución centralizada de los scripts del proyecto mediante ejecutar.sh.
 
-- Gestión remota mediante SSH.
-- Ejecución de Ansible.
-- Organización de inventarios.
-- Gestión de configuraciones.
+## Administración del Servidor
+    Gestión remota mediante SSH.
+    Organización del inventario Ansible.
+    Administración del router Cisco desde Ubuntu Server.
 
-### Trabajo Colaborativo
-
-- Acceso simultáneo mediante VS Code.
-- Conectividad privada mediante ZeroTier.
-- Administración remota del servidor Ubuntu.
+## Trabajo Colaborativo
+Acceso simultáneo mediante Visual Studio Code Remote SSH.
+Conectividad privada mediante ZeroTier.
+Administración remota del servidor Ubuntu.
 
 ---
 
@@ -105,15 +112,29 @@ Evaluacion4/
 ├── ansible/
 │   ├── ansible.cfg
 │   ├── inventory.ini
-│   ├── playbook_interfaces.yml
 │   ├── playbook_base.yml
-│   └── host_vars/
+│   ├── playbook_interfaces.yml
+│   └── vars.yml
+│
+├── python/
+│   ├── conexion.py
+│   ├── backup.py
+│   ├── validar_red.py
+│   └── reporte.py
+│
+├── bash/
+│   └── ejecutar.sh
+│
+├── backups/
+│
+├── reportes/
+│   └── reporte.json
+│
+├── docs/
 │
 ├── evidencias/
 │
-├── README.md
-│
-└── docs/
+└── README.md
 ```
 
 ---
@@ -247,28 +268,70 @@ ansible-playbook playbook_interfaces.yml
 
 # ✔️ Verificaciones
 
-Comprobar conexión
+## Comprobar conexión con Ansible
 
 ```bash
 ansible cisco -m ping
 ```
 
-Mostrar versión IOS
+---
+
+## Mostrar versión de Cisco IOS
 
 ```bash
 ansible Router1 -m cisco.ios.ios_command -a "commands='show version'"
 ```
 
-Mostrar interfaces
+---
+
+## Mostrar interfaces del Router
 
 ```bash
 ansible Router1 -m cisco.ios.ios_command -a "commands='show ip interface brief'"
 ```
 
-Mostrar configuración
+---
+
+## Mostrar configuración en ejecución
 
 ```bash
 ansible Router1 -m cisco.ios.ios_command -a "commands='show running-config'"
+```
+
+---
+
+## Ejecutar respaldo automático
+
+```bash
+cd python
+python3 backup.py
+```
+
+---
+
+## Validar la configuración de la red
+
+```bash
+cd python
+python3 validar_red.py
+```
+
+---
+
+## Generar reporte en formato JSON
+
+```bash
+cd python
+python3 reporte.py
+```
+
+---
+
+## Ejecutar todas las automatizaciones mediante Bash
+
+```bash
+chmod +x bash/ejecutar.sh
+./bash/ejecutar.sh
 ```
 
 ---
@@ -298,22 +361,156 @@ Responsabilidades:
 
 ---
 
-# 📷 Evidencias
+---
 
-Durante el desarrollo se documentó mediante capturas de pantalla:
+# 📷 Evidencias del Proyecto
 
-- Instalación de Ubuntu Server.
-- Configuración de ZeroTier.
-- Dirección IP del servidor.
-- Conexión Remote SSH.
-- Instalación de Ansible.
-- Inventario de dispositivos.
-- Ejecución de Ansible Ping.
-- Ejecución de Playbooks.
-- Configuración aplicada al Router Cisco.
-- Verificación mediante comandos IOS.
+A continuación se presentan las principales evidencias del desarrollo e implementación del proyecto.
+
+## 1. Creación del servidor Ubuntu
+
+**Creación de la máquina virtual Ubuntu Server**
+
+![Creación Ubuntu Server](imagenes/creacion_del_ubuntu_server.png)
 
 ---
+
+## 2. Actualización del sistema
+
+**Actualización de paquetes del servidor Ubuntu**
+
+![Actualización Ubuntu](imagenes/actualizacion_de_ubuntu-server.png)
+
+---
+
+## 3. Instalación y configuración de OpenSSH
+
+**Instalación del servidor OpenSSH**
+
+![Instalación OpenSSH](imagenes/instalacion_de_servidor_OpenSSH.png)
+
+**Servicio OpenSSH activo**
+
+![OpenSSH Activo](imagenes/OpenSSH_server_activado.png)
+
+---
+
+## 4. Configuración de ZeroTier
+
+**Creación de la red privada**
+
+![Red ZeroTier](imagenes/cracion_de_red_en_zerotier.png)
+
+**Servidor Ubuntu autorizado**
+
+![Servidor autorizado](imagenes/ubuntu-server_autorizado.png)
+
+**Autorización de los equipos**
+
+![Autorización equipos](imagenes/autorizacion_del_ubuntu-server_y_2_computadoras.png)
+
+**ZeroTier conectado correctamente**
+
+![ZeroTier conectado](imagenes/zerotier_instalado_y_conectado_a_ubuntu-server.png)
+
+---
+
+## 5. Estructura del proyecto
+
+**Organización del proyecto en Visual Studio Code**
+
+![Estructura del proyecto](imagenes/estructura_proyecto_evaluacion4.png)
+
+---
+
+## 6. Automatización con Ansible
+
+**Ejecución del playbook de configuración base**
+
+![Playbook Base](imagenes/ansible-playbook_playbook_base.yml.png)
+
+**Ejecución del playbook de interfaces**
+
+![Playbook Interfaces](imagenes/ansible-playbook_playbook_interfaces.yml.png)
+
+---
+
+## 7. Desarrollo de scripts en Python
+
+**Archivos desarrollados**
+
+![Scripts Python](imagenes/archivos_script_python.png)
+
+**Código de conexión al router**
+
+![Conexion](imagenes/codigo_conexion_router.png)
+
+**Código del reporte JSON**
+
+![Reporte](imagenes/codigo_generador_json.png)
+
+**Código actualizado del reporte**
+
+![Reporte actualizado](imagenes/codigo_reporte_textual.png)
+
+---
+
+## 8. Ejecución de scripts
+
+**Generación automática del backup**
+
+![Backup](imagenes/ejecucion_scripts_python_backup.png)
+
+**Validación automática de la red**
+
+![Validación](imagenes/ejecucion_script_validacion.png)
+
+**Automatización mediante Bash**
+
+![Automatización Bash](imagenes/ejecucion_automatizacion_ansible.png)
+
+---
+
+## 9. Resultados obtenidos
+
+**Contenido del archivo de backup**
+
+![Backup Cisco](imagenes/contenido_archivo_backup_cisco.png)
+
+**Contenido del reporte JSON**
+
+![Reporte JSON](imagenes/contenido_archivo_reporte_json.png)
+
+**Visualización del archivo JSON**
+
+![JSON](imagenes/vista_archivo_json_ide.png)
+
+---
+
+## 10. Administración del Router Cisco
+
+**Visualización de la configuración del router**
+
+![Running Config](imagenes/viendo_los_show_running-config.png)
+
+**Funcionamiento del router Cisco**
+
+![Router](imagenes/funcionamiento_de_la_pagina_del_router.png)
+
+---
+
+## 11. Automatización mediante Bash
+
+**Permisos de ejecución del script**
+
+![Permisos Bash](imagenes/permisos_archivo_bash_ejecutar.png)
+
+**Salida completa del script**
+
+![Salida Script](imagenes/salida_consola_reporte_detallado.png)
+
+---
+
 
 # 📋 Comandos Utilizados
 
@@ -357,14 +554,18 @@ ssh cisco@192.168.10.1
 
 # 📁 Archivos Principales
 
-| Archivo | Descripción |
-|----------|-------------|
-| ansible.cfg | Configuración de Ansible |
-| inventory.ini | Inventario de dispositivos |
-| playbook_interfaces.yml | Automatización de interfaces |
-| playbook_base.yml | Configuración base |
-| README.md | Documentación del proyecto |
-| evidencias/ | Capturas del desarrollo |
+| Archivo                 | Descripción                             |
+| ----------------------- | --------------------------------------- |
+| ansible.cfg             | Configuración de Ansible                |
+| inventory.ini           | Inventario de dispositivos              |
+| playbook_base.yml       | Configuración base del router           |
+| playbook_interfaces.yml | Configuración automática de interfaces  |
+| conexion.py             | Establece la conexión SSH con el router |
+| backup.py               | Genera un respaldo de la configuración  |
+| validar_red.py          | Verifica el estado del router           |
+| reporte.py              | Genera un reporte JSON                  |
+| ejecutar.sh             | Ejecuta las automatizaciones            |
+| README.md               | Documentación del proyecto              |
 
 ---
 
@@ -398,11 +599,17 @@ ssh cisco@192.168.10.1
 
 # 📈 Resultados Obtenidos
 
-- Comunicación exitosa entre Ubuntu Server y Cisco IOS mediante SSH.
-- Automatización de configuraciones utilizando Ansible.
-- Ejecución remota de comandos IOS.
-- Administración colaborativa desde diferentes ubicaciones mediante ZeroTier.
-- Implementación de un entorno funcional para automatización de redes.
+Durante el desarrollo del proyecto se obtuvieron los siguientes resultados:
+
+- Comunicación exitosa entre Ubuntu Server y el router Cisco IOS mediante SSH.
+- Automatización de la configuración base del router utilizando Ansible.
+- Ejecución de playbooks para administrar dispositivos Cisco.
+- Desarrollo de scripts en Python para realizar respaldos automáticos.
+- Validación automática de la configuración del router.
+- Generación de reportes en formato JSON.
+- Automatización de tareas mediante Bash.
+- Trabajo colaborativo utilizando Visual Studio Code Remote SSH y ZeroTier.
+- Documentación completa del proyecto mediante evidencias e imágenes.
 
 ---
 
